@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Browse Jobs – AkaziLink.rw</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    function filterJobs() {
+      const input = document.getElementById('job-search');
+      const filter = input.value.toLowerCase();
+      const jobCards = document.querySelectorAll('.job-card');
+      jobCards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(filter) ? 'block' : 'none';
+      });
+    }
+  </script>
+</head>
+<body class="text-gray-800" style="background-image: url('t2.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+  <div class="min-h-screen">
+    <!-- Header -->
+    <header class="bg-white bg-opacity-90 text-gray-900 p-4 shadow-md">
+      <div class="container mx-auto text-center">
+        <h1 class="text-3xl font-bold">Browse Jobs</h1>
+        <!-- Search Box -->
+        <form onsubmit="event.preventDefault(); filterJobs();" class="max-w-2xl mx-auto mt-4">
+          <div class="flex flex-col sm:flex-row items-center gap-2">
+            <input id="job-search" type="text" name="job" placeholder="Search for a job title or keyword..." class="w-full px-4 py-2 text-gray-800 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500" />
+            <button type="submit" class="bg-white text-gray-800 px-6 py-2 rounded-lg font-semibold hover:bg-gray-200 transition">Search</button>
+          </div>
+        </form>
+      </div>
+      <nav class="flex flex-wrap justify-center gap-4 mb-4">
+        <a href="index.html" class="hover:underline">Home</a>
+      </nav>
+    </header>
+
+    <!-- Job Listings -->
+    <main class="container mx-auto py-10">
+      <h2 class="text-2xl font-semibold mb-6">Available Jobs</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Job Listings -->
+        <div class="job-card border rounded-lg p-6 shadow hover:shadow-md transition bg-white bg-opacity-90">
+          <h3 class="text-xl font-bold">Software Developer</h3>
+          <p class="text-gray-600">Tech Solutions Ltd – Kigali</p>
+          <p class="mt-2">Experience with JavaScript and Python.</p>
+          <a href="apply now.html" class="text-gray-800 hover:underline mt-2 inline-block">Apply Now</a>
+        </div>
+        <div class="job-card border rounded-lg p-6 shadow hover:shadow-md transition bg-white bg-opacity-90">
+          <h3 class="text-xl font-bold">Marketing Officer</h3>
+          <p class="text-gray-600">Smart Agro Group – Musanze</p>
+          <p class="mt-2">Marketing agricultural solutions.</p>
+          <a href="apply now.html;" class="text-gray-800 hover:underline mt-2 inline-block">Apply Now</a>
+        </div>
+        <div class="job-card border rounded-lg p-6 shadow hover:shadow-md transition bg-white bg-opacity-90">
+          <h3 class="text-xl font-bold">Finance Analyst</h3>
+          <p class="text-gray-600">FinTech Hub Africa – Huye</p>
+          <p class="mt-2">Work in the finance department.</p>
+          <a href="apply now.html" class="text-gray-800 hover:underline mt-2 inline-block">Apply Now</a>
+        </div>
+        <div class="job-card border rounded-lg p-6 shadow hover:shadow-md transition bg-white bg-opacity-90">
+          <h3 class="text-xl font-bold">Graphic Designer</h3>
+          <p class="text-gray-600">Kwetu Media – Kigali</p>
+          <p class="mt-2">Create stunning visual content for clients.</p>
+          <a href="apply now.html" class="text-gray-800 hover:underline mt-2 inline-block">Apply Now</a>
+        </div>
+        <div class="job-card border rounded-lg p-6 shadow hover:shadow-md transition bg-white bg-opacity-90">
+          <h3 class="text-xl font-bold">Customer Support Agent</h3>
+          <p class="text-gray-600">Irembo – Kigali</p>
+          <p class="mt-2">Support users with their online applications.</p>
+          <a href="apply now.html" class="text-gray-800 hover:underline mt-2 inline-block">Apply Now</a>
+        </div>
+        <div class="job-card border rounded-lg p-6 shadow hover:shadow-md transition bg-white bg-opacity-90">
+          <h3 class="text-xl font-bold">Warehouse Manager</h3>
+          <p class="text-gray-600">Rwanda Trading Company – Gicumbi</p>
+          <p class="mt-2">Oversee warehouse operations and logistics.</p>
+          <a href="apply now.html" class="text-gray-800 hover:underline mt-2 inline-block">Apply Now</a>
+        </div>
+        <div class="job-card border rounded-lg p-6 shadow hover:shadow-md transition bg-white bg-opacity-90">
+          <h3 class="text-xl font-bold">Project Coordinator</h3>
+          <p class="text-gray-600">UNDP Rwanda – Kigali</p>
+          <p class="mt-2">Coordinate development projects and teams.</p>
+          <a href="apply now.html" class="text-gray-800 hover:underline mt-2 inline-block">Apply Now</a>
+        </div>
+        <div class="job-card border rounded-lg p-6 shadow hover:shadow-md transition bg-white bg-opacity-90">
+          <h3 class="text-xl font-bold">Primary School Teacher</h3>
+          <p class="text-gray-600">Green Hills Academy – Kigali</p>
+          <p class="mt-2">Teach primary classes in an international setting.</p>
+          <a href="apply now.html" class="text-gray-800 hover:underline mt-2 inline-block">Apply Now</a>
+        </div>
+        <div class="job-card border rounded-lg p-6 shadow hover:shadow-md transition bg-white bg-opacity-90">
+          <h3 class="text-xl font-bold">Civil Engineer</h3>
+          <p class="text-gray-600">Horizon Construction – Nyagatare</p>
+          <p class="mt-2">Manage infrastructure and construction projects.</p>
+          <a href="apply now.html" class="text-gray-800 hover:underline mt-2 inline-block">Apply Now</a>
+        </div>
+        <div class="job-card border rounded-lg p-6 shadow hover:shadow-md transition bg-white bg-opacity-90">
+          <h3 class="text-xl font-bold">HR Manager</h3>
+          <p class="text-gray-600">Bank of Kigali – Kigali</p>
+          <p class="mt-2">Lead recruitment and HR strategy.</p>
+          <a href="apply now.html" class="text-gray-800 hover:underline mt-2 inline-block">Apply Now</a>
+        </div>
+        <div class="job-card border rounded-lg p-6 shadow hover:shadow-md transition bg-white bg-opacity-90">
+          <h3 class="text-xl font-bold">IT Support Technician</h3>
+          <p class="text-gray-600">Rwanda Revenue Authority – Kigali</p>
+          <p class="mt-2">Provide IT support across departments.</p>
+          <a href="apply now.html" class="text-gray-800 hover:underline mt-2 inline-block">Apply Now</a>
+        </div>
+        <div class="job-card border rounded-lg p-6 shadow hover:shadow-md transition bg-white bg-opacity-90">
+          <h3 class="text-xl font-bold">Legal Advisor</h3>
+          <p class="text-gray-600">Rwanda Law Reform Commission – Kigali</p>
+          <p class="mt-2">Provide legal guidance on national policy.</p>
+          <a href="apply now.html" class="text-gray-800 hover:underline mt-2 inline-block">Apply Now</a>
+        </div>
+        <div class="job-card border rounded-lg p-6 shadow hover:shadow-md transition bg-white bg-opacity-90">
+          <h3 class="text-xl font-bold">Social Media Manager</h3>
+          <p class="text-gray-600">Made in Rwanda – Kigali</p>
+          <p class="mt-2">Grow brand presence on social platforms.</p>
+          <a href="apply now.html" class="text-gray-800 hover:underline mt-2 inline-block">Apply Now</a>
+        </div>
+        <div class="job-card border rounded-lg p-6 shadow hover:shadow-md transition bg-white bg-opacity-90">
+          <h3 class="text-xl font-bold">Medical Officer</h3>
+          <p class="text-gray-600">Rwanda Medical Center – Rwamagana</p>
+          <p class="mt-2">Deliver quality healthcare services.</p>
+          <a href="appl now.html" class="text-gray-800 hover:underline mt-2 inline-block">Apply Now</a>
+        </div>
+        <div class="job-card border rounded-lg p-6 shadow hover:shadow-md transition bg-white bg-opacity-90">
+          <h3 class="text-xl font-bold">UX/UI Designer</h3>
+          <p class="text-gray-600">Andela – Kigali</p>
+          <p class="mt-2">Design user-friendly web and mobile interfaces.</p>
+          <a href="apply now.html" class="text-gray-800 hover:underline mt-2 inline-block">Apply Now</a>
+        </div>
+        <div class="job-card border rounded-lg p-6 shadow hover:shadow-md transition bg-white bg-opacity-90">
+          <h3 class="text-xl font-bold">Data Analyst</h3>
+          <p class="text-gray-600">Insight Analytics Rwanda – Kigali</p>
+          <p class="mt-2">Analyze datasets and generate reports.</p>
+          <a href="apply now.html" class="text-gray-800 hover:underline mt-2 inline-block">Apply Now</a>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white bg-opacity-90 text-center text-sm p-4 mt-10">
+      <p>&copy; 2025 AkaziLink.rw – All rights reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>

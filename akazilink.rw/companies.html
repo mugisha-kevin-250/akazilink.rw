@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Find Companies - Akazi.rw</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      color: #000;
+      padding: 20px;
+      background-image: url('t2.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+    }
+
+    .top-bar {
+      padding: 15px;
+      text-align: center;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+
+    .home-link {
+      font-size: 18px;
+      text-decoration: none;
+      color: white;
+      background-color: #0056b3;
+      padding: 10px 20px;
+      border-radius: 8px;
+      transition: background-color 0.3s, text-decoration 0.3s;
+    }
+
+    .home-link:hover {
+      background-color: #004080;
+      text-decoration: underline;
+    }
+
+    h1 {
+      margin-top: 10px;
+      color: white;
+    }
+
+    #searchBox {
+      display: block;
+      margin: 20px auto;
+      padding: 10px;
+      width: 300px;
+      font-size: 16px;
+      border: 2px solid black;
+      border-radius: 5px;
+    }
+
+    .company-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .company-card {
+      background-color: white;
+      border: 2px solid black;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+      position: relative;
+    }
+
+    .company-card:hover {
+      transform: scale(1.03);
+    }
+
+    .company-card.hidden {
+      display: none;
+    }
+
+    .company-name {
+      font-weight: bold;
+      color: black;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .company-industry, .company-location {
+      font-size: 14px;
+      margin-top: 3px;
+    }
+
+    .meet-link {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: #28a745;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+
+    .meet-link:hover {
+      background-color: #218838;
+    }
+
+    .company-popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .company-popup-content {
+      background: white;
+      padding: 20px;
+      border-radius: 5px;
+      max-width: 90%;
+      width: 500px;
+      position: relative;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .company-popup.active {
+      display: flex;
+    }
+
+    .company-popup p {
+      margin: 5px 0;
+    }
+
+    .company-popup .close-popup {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #000;
+    }
+
+    .company-popup .start-chat {
+      display: inline-block;
+      margin-top: 10px;
+      color: #007BFF;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .company-popup .start-chat:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <a href="index.html" class="home-link">Home</a>
+    <h1>Available Companies on Akazi.rw</h1>
+  </div>
+
+  <input type="text" id="searchBox" placeholder="Search for a company...">
+
+  <div class="company-list" id="companyList">
+    <div class="company-card">
+      <div class="company-name">Apple Inc.</div>
+      <div class="company-industry">Technology</div>
+      <div class="company-location">Cupertino, USA</div>
+      <a href="#" class="meet-link" data-company="apple-inc">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Microsoft Corporation</div>
+      <div class="company-industry">Technology</div>
+      <div class="company-location">Redmond, USA</div>
+      <a href="#" class="meet-link" data-company="microsoft-corporation">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Amazon.com Inc.</div>
+      <div class="company-industry">Retail</div>
+      <div class="company-location">Seattle, USA</div>
+      <a href="#" class="meet-link" data-company="amazon-com-inc">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Alphabet Inc.</div>
+      <div class="company-industry">Technology</div>
+      <div class="company-location">Mountain View, USA</div>
+      <a href="#" class="meet-link" data-company="alphabet-inc">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Meta Platforms Inc.</div>
+      <div class="company-industry">Technology</div>
+      <div class="company-location">Menlo Park, USA</div>
+      <a href="#" class="meet-link" data-company="meta-platforms-inc">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Tesla Inc.</div>
+      <div class="company-industry">Automotive</div>
+      <div class="company-location">Palo Alto, USA</div>
+      <a href="#" class="meet-link" data-company="tesla-inc">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">NVIDIA Corporation</div>
+      <div class="company-industry">Technology</div>
+      <div class="company-location">Santa Clara, USA</div>
+      <a href="#" class="meet-link" data-company="nvidia-corporation">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">JPMorgan Chase & Co.</div>
+      <div class="company-industry">Finance</div>
+      <div class="company-location">New York, USA</div>
+      <a href="#" class="meet-link" data-company="jpmorgan-chase-co">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Walmart Inc.</div>
+      <div class="company-industry">Retail</div>
+      <div class="company-location">Bentonville, USA</div>
+      <a href="#" class="meet-link" data-company="walmart-inc">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">UnitedHealth Group</div>
+      <div class="company-industry">Healthcare</div>
+      <div class="company-location">Minnetonka, USA</div>
+      <a href="#" class="meet-link" data-company="unitedhealth-group">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Visa Inc.</div>
+      <div class="company-industry">Finance</div>
+      <div class="company-location">San Francisco, USA</div>
+      <a href="#" class="meet-link" data-company="visa-inc">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Exxon Mobil Corporation</div>
+      <div class="company-industry">Energy</div>
+      <div class="company-location">Irving, USA</div>
+      <a href="#" class="meet-link" data-company="exxon-mobil-corporation">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Saudi Aramco</div>
+      <div class="company-industry">Energy</div>
+      <div class="company-location">Dhahran, Saudi Arabia</div>
+      <a href="#" class="meet-link" data-company="saudi-aramco">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Berkshire Hathaway</div>
+      <div class="company-industry">Finance</div>
+      <div class="company-location">Omaha, USA</div>
+      <a href="#" class="meet-link" data-company="berkshire-hathaway">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Johnson & Johnson</div>
+      <div class="company-industry">Healthcare</div>
+      <div class="company-location">New Brunswick, USA</div>
+      <a href="#" class="meet-link" data-company="johnson-johnson">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Procter & Gamble</div>
+      <div class="company-industry">Consumer Goods</div>
+      <div class="company-location">Cincinnati, USA</div>
+      <a href="#" class="meet-link" data-company="procter-gamble">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Home Depot</div>
+      <div class="company-industry">Retail</div>
+      <div class="company-location">Atlanta, USA</div>
+      <a href="#" class="meet-link" data-company="home-depot">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Coca-Cola Company</div>
+      <div class="company-industry">Beverages</div>
+      <div class="company-location">Atlanta, USA</div>
+      <a href="#" class="meet-link" data-company="coca-cola-company">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">McDonald's Corporation</div>
+      <div class="company-industry">Food Service</div>
+      <div class="company-location">Chicago, USA</div>
+      <a href="#" class="meet-link" data-company="mcdonalds-corporation">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Intel Corporation</div>
+      <div class="company-industry">Technology</div>
+      <div class="company-location">Santa Clara, USA</div>
+      <a href="#" class="meet-link" data-company="intel-corporation">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Goldman Sachs Group</div>
+      <div class="company-industry">Finance</div>
+      <div class="company-location">New York, USA</div>
+      <a href="#" class="meet-link" data-company="goldman-sachs-group">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Boeing Company</div>
+      <div class="company-industry">Aerospace</div>
+      <div class="company-location">Chicago, USA</div>
+      <a href="#" class="meet-link" data-company="boeing-company">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Cisco Systems</div>
+      <div class="company-industry">Technology</div>
+      <div class="company-location">San Jose, USA</div>
+      <a href="#" class="meet-link" data-company="cisco-systems">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Nike Inc.</div>
+      <div class="company-industry">Apparel</div>
+      <div class="company-location">Beaverton, USA</div>
+      <a href="#" class="meet-link" data-company="nike-inc">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">IBM Corporation</div>
+      <div class="company-industry">Technology</div>
+      <div class="company-location">Armonk, USA</div>
+      <a href="#" class="meet-link" data-company="ibm-corporation">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Verizon Communications</div>
+      <div class="company-industry">Telecommunications</div>
+      <div class="company-location">New York, USA</div>
+      <a href="#" class="meet-link" data-company="verizon-communications">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">American Express</div>
+      <div class="company-industry">Finance</div>
+      <div class="company-location">New York, USA</div>
+      <a href="#" class="meet-link" data-company="american-express">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Merck & Co.</div>
+      <div class="company-industry">Pharmaceuticals</div>
+      <div class="company-location">Kenilworth, USA</div>
+      <a href="#" class="meet-link" data-company="merck-co">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Salesforce Inc.</div>
+      <div class="company-industry">Technology</div>
+      <div class="company-location">San Francisco, USA</div>
+      <a href="#" class="meet-link" data-company="salesforce-inc">Meet with Company</a>
+    </div>
+    <div class="company-card">
+      <div class="company-name">Walt Disney Company</div>
+      <div class="company-industry">Entertainment</div>
+      <div class="company-location">Burbank, USA</div>
+      <a href="#" class="meet-link" data-company="walt-disney-company">Meet with Company</a>
+    </div>
+  </div>
+
+  <!-- Company Popups -->
+  <div class="company-popup" id="apple-inc-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Apple Inc.</h3>
+      <p><strong>Industry:</strong> Technology</p>
+      <p><strong>Phone:</strong> +1 408-996-1010</p>
+      <p><strong>Email:</strong> contact@apple.com</p>
+      <p><strong>Location:</strong> Cupertino, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="microsoft-corporation-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Microsoft Corporation</h3>
+      <p><strong>Industry:</strong> Technology</p>
+      <p><strong>Phone:</strong> +1 425-882-8080</p>
+      <p><strong>Email:</strong> support@microsoft.com</p>
+      <p><strong>Location:</strong> Redmond, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="amazon-com-inc-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Amazon.com Inc.</h3>
+      <p><strong>Industry:</strong> Retail</p>
+      <p><strong>Phone:</strong> +1 206-266-1000</p>
+      <p><strong>Email:</strong> support@amazon.com</p>
+      <p><strong>Location:</strong> Seattle, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="alphabet-inc-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Alphabet Inc.</h3>
+      <p><strong>Industry:</strong> Technology</p>
+      <p><strong>Phone:</strong> +1 650-253-0000</p>
+      <p><strong>Email:</strong> contact@google.com</p>
+      <p><strong>Location:</strong> Mountain View, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="meta-platforms-inc-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Meta Platforms Inc.</h3>
+      <p><strong>Industry:</strong> Technology</p>
+      <p><strong>Phone:</strong> +1 650-543-4800</p>
+      <p><strong>Email:</strong> support@meta.com</p>
+      <p><strong>Location:</strong> Menlo Park, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="tesla-inc-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Tesla Inc.</h3>
+      <p><strong>Industry:</strong> Automotive</p>
+      <p><strong>Phone:</strong> +1 650-681-5100</p>
+      <p><strong>Email:</strong> support@tesla.com</p>
+      <p><strong>Location:</strong> Palo Alto, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="nvidia-corporation-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">NVIDIA Corporation</h3>
+      <p><strong>Industry:</strong> Technology</p>
+      <p><strong>Phone:</strong> +1 408-486-2000</p>
+      <p><strong>Email:</strong> info@nvidia.com</p>
+      <p><strong>Location:</strong> Santa Clara, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="jpmorgan-chase-co-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">JPMorgan Chase & Co.</h3>
+      <p><strong>Industry:</strong> Finance</p>
+      <p><strong>Phone:</strong> +1 212-270-6000</p>
+      <p><strong>Email:</strong> contact@jpmorgan.com</p>
+      <p><strong>Location:</strong> New York, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="walmart-inc-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Walmart Inc.</h3>
+      <p><strong>Industry:</strong> Retail</p>
+      <p><strong>Phone:</strong> +1 479-273-4000</p>
+      <p><strong>Email:</strong> help@walmart.com</p>
+      <p><strong>Location:</strong> Bentonville, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="unitedhealth-group-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">UnitedHealth Group</h3>
+      <p><strong>Industry:</strong> Healthcare</p>
+      <p><strong>Phone:</strong> +1 952-936-1300</p>
+      <p><strong>Email:</strong> contact@unitedhealthgroup.com</p>
+      <p><strong>Location:</strong> Minnetonka, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="visa-inc-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Visa Inc.</h3>
+      <p><strong>Industry:</strong> Finance</p>
+      <p><strong>Phone:</strong> +1 650-432-3200</p>
+      <p><strong>Email:</strong> support@visa.com</p>
+      <p><strong>Location:</strong> San Francisco, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="exxon-mobil-corporation-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Exxon Mobil Corporation</h3>
+      <p><strong>Industry:</strong> Energy</p>
+      <p><strong>Phone:</strong> +1 972-940-6000</p>
+      <p><strong>Email:</strong> contact@exxonmobil.com</p>
+      <p><strong>Location:</strong> Irving, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="saudi-aramco-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Saudi Aramco</h3>
+      <p><strong>Industry:</strong> Energy</p>
+      <p><strong>Phone:</strong> +966 13-874-5555</p>
+      <p><strong>Email:</strong> info@aramco.com</p>
+      <p><strong>Location:</strong> Dhahran, Saudi Arabia</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="berkshire-hathaway-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Berkshire Hathaway</h3>
+      <p><strong>Industry:</strong> Finance</p>
+      <p><strong>Phone:</strong> +1 402-346-1400</p>
+      <p><strong>Email:</strong> contact@berkshirehathaway.com</p>
+      <p><strong>Location:</strong> Omaha, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="johnson-johnson-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Johnson & Johnson</h3>
+      <p><strong>Industry:</strong> Healthcare</p>
+      <p><strong>Phone:</strong> +1 732-524-0400</p>
+      <p><strong>Email:</strong> support@jnj.com</p>
+      <p><strong>Location:</strong> New Brunswick, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="procter-gamble-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Procter & Gamble</h3>
+      <p><strong>Industry:</strong> Consumer Goods</p>
+      <p><strong>Phone:</strong> +1 513-983-1100</p>
+      <p><strong>Email:</strong> contact@pg.com</p>
+      <p><strong>Location:</strong> Cincinnati, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="home-depot-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Home Depot</h3>
+      <p><strong>Industry:</strong> Retail</p>
+      <p><strong>Phone:</strong> +1 770-433-8211</p>
+      <p><strong>Email:</strong> support@homedepot.com</p>
+      <p><strong>Location:</strong> Atlanta, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="coca-cola-company-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Coca-Cola Company</h3>
+      <p><strong>Industry:</strong> Beverages</p>
+      <p><strong>Phone:</strong> +1 404-676-2121</p>
+      <p><strong>Email:</strong> contact@coca-cola.com</p>
+      <p><strong>Location:</strong> Atlanta, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="mcdonalds-corporation-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">McDonald's Corporation</h3>
+      <p><strong>Industry:</strong> Food Service</p>
+      <p><strong>Phone:</strong> +1 630-623-3000</p>
+      <p><strong>Email:</strong> support@mcdonalds.com</p>
+      <p><strong>Location:</strong> Chicago, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="intel-corporation-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Intel Corporation</h3>
+      <p><strong>Industry:</strong> Technology</p>
+      <p><strong>Phone:</strong> +1 408-765-8080</p>
+      <p><strong>Email:</strong> support@intel.com</p>
+      <p><strong>Location:</strong> Santa Clara, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="goldman-sachs-group-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Goldman Sachs Group</h3>
+      <p><strong>Industry:</strong> Finance</p>
+      <p><strong>Phone:</strong> +1 212-902-1000</p>
+      <p><strong>Email:</strong> contact@goldmansachs.com</p>
+      <p><strong>Location:</strong> New York, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="boeing-company-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Boeing Company</h3>
+      <p><strong>Industry:</strong> Aerospace</p>
+      <p><strong>Phone:</strong> +1 312-544-2000</p>
+      <p><strong>Email:</strong> support@boeing.com</p>
+      <p><strong>Location:</strong> Chicago, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="cisco-systems-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Cisco Systems</h3>
+      <p><strong>Industry:</strong> Technology</p>
+      <p><strong>Phone:</strong> +1 408-526-4000</p>
+      <p><strong>Email:</strong> support@cisco.com</p>
+      <p><strong>Location:</strong> San Jose, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="nike-inc-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Nike Inc.</h3>
+      <p><strong>Industry:</strong> Apparel</p>
+      <p><strong>Phone:</strong> +1 503-671-6453</p>
+      <p><strong>Email:</strong> support@nike.com</p>
+      <p><strong>Location:</strong> Beaverton, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="ibm-corporation-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">IBM Corporation</h3>
+      <p><strong>Industry:</strong> Technology</p>
+      <p><strong>Phone:</strong> +1 914-499-1900</p>
+      <p><strong>Email:</strong> support@ibm.com</p>
+      <p><strong>Location:</strong> Armonk, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="verizon-communications-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Verizon Communications</h3>
+      <p><strong>Industry:</strong> Telecommunications</p>
+      <p><strong>Phone:</strong> +1 212-395-1000</p>
+      <p><strong>Email:</strong> support@verizon.com</p>
+      <p><strong>Location:</strong> New York, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="american-express-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">American Express</h3>
+      <p><strong>Industry:</strong> Finance</p>
+      <p><strong>Phone:</strong> +1 212-640-2000</p>
+      <p><strong>Email:</strong> support@amex.com</p>
+      <p><strong>Location:</strong> New York, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="merck-co-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Merck & Co.</h3>
+      <p><strong>Industry:</strong> Pharmaceuticals</p>
+      <p><strong>Phone:</strong> +1 908-740-4000</p>
+      <p><strong>Email:</strong> support@merck.com</p>
+      <p><strong>Location:</strong> Kenilworth, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="salesforce-inc-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Salesforce Inc.</h3>
+      <p><strong>Industry:</strong> Technology</p>
+      <p><strong>Phone:</strong> +1 415-901-7000</p>
+      <p><strong>Email:</strong> support@salesforce.com</p>
+      <p><strong>Location:</strong> San Francisco, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+  <div class="company-popup" id="walt-disney-company-popup">
+    <div class="company-popup-content">
+      <span class="close-popup">×</span>
+      <h3 class="company-name">Walt Disney Company</h3>
+      <p><strong>Industry:</strong> Entertainment</p>
+      <p><strong>Phone:</strong> +1 818-560-1000</p>
+      <p><strong>Email:</strong> support@disney.com</p>
+      <p><strong>Location:</strong> Burbank, USA</p>
+      <a href="#" class="start-chat">Start Chat</a>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript to handle popup visibility
+    const meetLinks = document.querySelectorAll('.meet-link');
+    const popups = document.querySelectorAll('.company-popup');
+    const closeButtons = document.querySelectorAll('.close-popup');
+    const searchBox = document.getElementById('searchBox');
+    const companyCards = document.querySelectorAll('.company-card');
+
+    meetLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const companyId = link.getAttribute('data-company');
+        const popup = document.getElementById(`${companyId}-popup`);
+        if (popup) {
+          popup.classList.add('active');
+        }
+      });
+    });
+
+    closeButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        popups.forEach(popup => popup.classList.remove('active'));
+      });
+    });
+
+    // Close popup when clicking outside content
+    popups.forEach(popup => {
+      popup.addEventListener('click', (e) => {
+        if (e.target === popup) {
+          popup.classList.remove('active');
+        }
+      });
+    });
+
+    // Search functionality
+    searchBox.addEventListener('input', () => {
+      const searchTerm = searchBox.value.toLowerCase();
+      companyCards.forEach(card => {
+        const name = card.querySelector('.company-name').textContent.toLowerCase();
+        const industry = card.querySelector('.company-industry').textContent.toLowerCase();
+        if (name.includes(searchTerm) || industry.includes(searchTerm)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Apply for Job | Akazi.rw</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url('t2.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    header, footer {
+      background-color: transparent;
+      color: white;
+      padding: 15px 0;
+      text-align: center;
+      width: 100%;
+    }
+    nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+      background-color: transparent;
+      padding: 10px 15px;
+      border-radius: 5px;
+      border: 2px solid white;
+    }
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    .form-container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 10px;
+      margin: 40px 20px;
+      max-width: 600px;
+      width: 100%;
+    }
+    h1 {
+      text-align: center;
+      color: #0077b6;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #0077b6;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005f84;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="akazi.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="jobs.html">Browse Jobs</a>
+      <a href="messages.html">Messages</a>
+    </nav>
+  </header>
+
+  <div class="form-container">
+    <h1>Apply for a Job</h1>
+    <form action="#" method="POST">
+      <label for="fullname">Full Name</label>
+      <input type="text" id="fullname" name="fullname" required>
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" required>
+
+      <label for="position">Position Applying For</label>
+      <input type="text" id="position" name="position" required>
+
+      <label for="cv">Upload Your CV</label>
+      <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx">
+
+      <label for="message">Additional Information</label>
+      <textarea id="message" name="message" rows="5"></textarea>
+
+      <button type="submit">Submit Application</button>
+    </form>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Akazi.rw. All rights reserved.</p>
+  </footer>
+</body>
+</html>

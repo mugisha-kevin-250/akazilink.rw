@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akazi.rw – Reinventing Work in Rwanda</title>
+  <style>
+    body {
+      background-color: #ffffff;
+      color: #1f2937;
+    }
+
+    /* Header */
+    header {
+      background-color: #ffffff;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    header .container {
+      max-width: 1280px;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2563eb;
+    }
+
+    header nav {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    header nav a {
+      color: #1f2937;
+      text-decoration: none;
+    }
+
+    header nav a:hover {
+      color: #2563eb;
+    }
+
+    /* Hero Carousel Section */
+    .hero-section {
+      position: relative;
+      height: 600px;
+      overflow: hidden;
+    }
+
+    #slider {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #slider img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 200ms;
+    }
+
+    #slider img.active {
+      opacity: 1;
+    }
+
+    .hero-overlay {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      color: #ffffff;
+      background-color: rgba(0, 0, 0, 0.4);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+    }
+
+    .hero-overlay h2 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .hero-overlay p {
+      font-size: 1.125rem;
+      max-width: 32rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-overlay .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-overlay a.button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.375rem;
+      text-decoration: none;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .hero-overlay a.button-primary {
+      background-color: #2563eb;
+      color: #ffffff;
+    }
+
+    .hero-overlay a.button-primary:hover {
+      background-color: #1d4ed8;
+    }
+
+    .hero-overlay a.button-secondary {
+      border: 1px solid #ffffff;
+      color: #ffffff;
+    }
+
+    .hero-overlay a.button-secondary:hover {
+      background-color: #ffffff;
+      color: #000000;
+    }
+
+    .hero-overlay form {
+      max-width: 32rem;
+      width: 100%;
+    }
+
+    .hero-overlay .search-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .hero-overlay .search-form {
+        flex-direction: row;
+      }
+    }
+
+    .hero-overlay input {
+      width: 100%;
+      padding: 0.5rem 1rem;
+      color: #1f2937;
+      border: 1px solid #d1d5db;
+      border-radius: 0.375rem;
+      outline: none;
+    }
+
+    .hero-overlay input:focus {
+      box-shadow: 0 0 0 2px rgba(147, 197, 253, 0.5);
+    }
+
+    .hero-overlay button {
+      background-color: #2563eb;
+      color: #ffffff;
+      padding: 0.5rem 1.5rem;
+      border-radius: 0.375rem;
+      font-weight: 600;
+      transition: background-color 0.2s;
+    }
+
+    .hero-overlay button:hover {
+      background-color: #1d4ed8;
+    }
+
+    /* Business Benefits */
+    .business-benefits {
+      padding: 4rem 0;
+      background-color: #ffffff;
+      text-align: center;
+    }
+
+    .business-benefits h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .business-benefits .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      max-width: 80rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (min-width: 768px) {
+      .business-benefits .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .business-benefits a {
+      margin-top: 1.5rem;
+      display: inline-block;
+      background-color: #2563eb;
+      color: #ffffff;
+      padding: 0.5rem 1.5rem;
+      border-radius: 0.375rem;
+      text-decoration: none;
+    }
+
+    .business-benefits a:hover {
+      background-color: #1d4ed8;
+    }
+
+    /* Worker Benefits */
+    .worker-benefits {
+      padding: 4rem 0;
+      background-color: #f9fafb;
+      text-align: center;
+    }
+
+    .worker-benefits h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .worker-benefits .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      max-width: 80rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (min-width: 768px) {
+      .worker-benefits .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .worker-benefits a {
+      margin-top: 1.5rem;
+      display: inline-block;
+      border: 1px solid #2563eb;
+      color: #2563eb;
+      padding: 0.5rem 1.5rem;
+      border-radius: 0.375rem;
+      text-decoration: none;
+    }
+
+    .worker-benefits a:hover {
+      background-color: #dbeafe;
+    }
+
+    /* Download App Section */
+    .download-app {
+      padding: 4rem 0;
+      background-color: #ffffff;
+      text-align: center;
+    }
+
+    .download-app h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .download-app .app-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .download-app img {
+      height: 3rem;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #000000;
+      color: #ffffff;
+      font-size: 0.875rem;
+      padding: 2.5rem;
+    }
+
+    footer .container {
+      max-width: 96rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    footer nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    footer nav a {
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    footer nav a:hover {
+      text-decoration: underline;
+    }
+
+    footer .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      footer .grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    footer h4 {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    footer p {
+      margin-bottom: 0.5rem;
+    }
+
+    footer input {
+      width: 100%;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.375rem;
+      color: #000000;
+      margin-bottom: 0.5rem;
+    }
+
+    footer button {
+      background-color: #2563eb;
+      color: #ffffff;
+      padding: 0.25rem 1rem;
+      border-radius: 0.375rem;
+    }
+
+    footer .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    footer .footer-bottom {
+      text-align: center;
+      margin-top: 2.5rem;
+    }
+
+    footer .footer-bottom p:last-child {
+      margin-top: 0.5rem;
+      color: #9ca3af;
+      font-size: 0.75rem;
+      max-width: 64rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Chatbot */
+    #chatbot {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 50;
+      background-color: #ffffff;
+      border-radius: 0.5rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      display: none;
+      width: 20rem;
+    }
+
+    #chatbot .chat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem;
+      background-color: #2563eb;
+      color: #ffffff;
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+    }
+
+    #chatbot .chat-header button {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    #chatMessages {
+      padding: 1rem;
+      height: 16rem;
+      overflow-y: auto;
+      background-color: #f9fafb;
+    }
+
+    #chatbot .chat-input {
+      padding: 0.75rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    #chatInput {
+      width: 100%;
+      padding: 0.25rem 0.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.375rem;
+      outline: none;
+    }
+
+    #chatInput:focus {
+      box-shadow: 0 0 0 2px rgba(147, 197, 253, 0.5);
+    }
+
+    #voiceToggle {
+      background-color: #22c55e;
+      color: #ffffff;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.375rem;
+      transition: background-color 0.2s;
+    }
+
+    #voiceToggle:hover {
+      background-color: #16a34a;
+    }
+
+    #voiceToggle.active {
+      background-color: #ef4444;
+    }
+
+    #sendMessage {
+      background-color: #2563eb;
+      color: #ffffff;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.375rem;
+      transition: background-color 0.2s;
+    }
+
+    #sendMessage:hover {
+      background-color: #1d4ed8;
+    }
+
+    .chat-message {
+      margin-bottom: 0.5rem;
+    }
+
+    .chat-message span {
+      display: inline-block;
+      color: #1f2937;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+    }
+
+    .chat-message.user span {
+      background-color: #e5e7eb;
+    }
+
+    .chat-message.bot span {
+      background-color: #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Open Chat Button */
+    #openChat {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background-color: #f97316;
+      color: #ffffff;
+      border-radius: 9999px;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      transition: background-color 0.2s;
+      z-index: 50;
+    }
+
+    #openChat:hover {
+      background-color: #ea580c;
+    }
+
+    #openChat svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    /* Back to Top Button */
+    #backToTop {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      background-color: #2563eb;
+      color: #ffffff;
+      border-radius: 9999px;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      transition: background-color 0.2s;
+      z-index: 50;
+      display: none;
+    }
+
+    #backToTop:hover {
+      background-color: #1d4ed8;
+    }
+
+    #backToTop svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <h1>Akazi.rw</h1>
+      <nav>
+        <a href="browse.html">Find Work</a>
+        <a href="find workers.html">Find Workers</a>
+        <a href="abt us.html">About</a>
+        <a href="post.html">Post a job</a>
+        <a href="companies.html">Companies</a>
+        <a href="community.html">Community</a>
+        <a href="blog.html">Blog</a>
+        <a href="message.html">message</a>
+        <a href="LOG IN.html">LOG IN</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Carousel Section -->
+  <section class="hero-section">
+    <div id="slider">
+      <img src="T2.JPG" class="active" alt="Banner 1" />
+      <img src="b1.AVIF" alt="Banner 2" />
+      <img src="b3.AVIF" alt="Banner 3" />
+      <img src="b4.AVIF" alt="Banner 4" />
+      <img src="T2.JPG" alt="Banner 5" />
+      <img src="b6.AVIF" alt="Banner 6" />
+    </div>
+
+    <!-- Overlay -->
+    <div class="hero-overlay">
+      <h2>Better Way to Live</h2>
+      <p>
+        Akazi.rw connects employers with workers in real-time, creating job opportunities instantly and efficiently.
+      </p>
+      <div class="button-group">
+        <a href="browse.html" class="button button-primary">Find Work</a>
+        <a href="find workers.html" class="button button-secondary">Find Workers</a>
+      </div>
+
+      <!-- Search -->
+      <form action="#" method="GET">
+        <div class="search-form">
+          <input type="text" name="search" placeholder="Search jobs or workers..." />
+          <button type="submit">Search</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Business Benefits -->
+  <section class="business-benefits">
+    <h3>Business Benefits</h3>
+    <div class="grid">
+      <div>No sign-up fees, contracts or commitments.</div>
+      <div>View profiles then select a Tasker—you’re in control.</div>
+      <div>Like a Tasker? Hire them for free! No strings attached.</div>
+    </div>
+    <a href="#">Schedule Demo</a>
+  </section>
+
+  <!-- Worker Benefits -->
+  <section class="worker-benefits">
+    <h3>Worker Benefits</h3>
+    <div class="grid">
+      <div>Find immediate, flexible work with an easy to use app.</div>
+      <div>Work when and where you want—you’re in control!</div>
+      <div>Get paid quickly with instant payout.</div>
+    </div>
+    <a href="Learn More.html">Learn More</a>
+  </section>
+
+  <!-- Download App Section -->
+  <section class="download-app">
+    <h3>Download Akazi Today!</h3>
+    <div class="app-links">
+      <a href="https://apps.apple.com/" target="_blank" rel="noopener noreferrer">
+        <img src="appstore.jpg" alt="App Store" />
+      </a>
+      <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer">
+        <img src="playstore.jpg" alt="Play Store" />
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <nav>
+        <a href="browse.html">Browse Jobs</a>
+        <a href="post.html">Post a Job</a>
+        <a href="companies.html">Companies</a>
+        <a href="account.html">My Account</a>
+        <a href="abt_us.html">About Us</a>
+        <a href="faq.html">FAQ</a>
+        <a href="message.html">Message</a>
+      </nav>
+      <div class="grid">
+        <div>
+          <h4>Newsletter</h4>
+          <p>Join our Newsletter for updates, offers, and more.</p>
+          <input type="email" placeholder="Enter your email address" />
+          <button>Submit</button>
+        </div>
+        <div>
+          <h4>Follow Us</h4>
+          <div class="social-links">
+            <span>Facebook</span>
+            <span>Instagram</span>
+            <span>LinkedIn</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© Akazi.rw 2025</p>
+      <p>
+        Akazi.rw is a Rwandan job matching platform that bridges the gap between employers and job seekers across various industries. We are not a recruitment agency but a digital tool enabling Rwandans to connect with work and workers faster, easier, and smarter. Registered in Rwanda.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Chatbot (Powered by Akazi) -->
+  <div id="chatbot">
+    <div class="chat-header">
+      <span>Chat with Akazi</span>
+      <button id="closeChat">×</button>
+    </div>
+    <div id="chatMessages">
+      <!-- Messages will be appended here -->
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Type your question..." />
+      <button id="voiceToggle" title="Toggle Voice Input">🎙️</button>
+      <button id="sendMessage">Send</button>
+    </div>
+  </div>
+  <button id="openChat">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+    </svg>
+  </button>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+    </svg>
+  </button>
+
+  <!-- Banner Carousel and Chatbot JavaScript -->
+  <script>
+    // Banner Carousel
+    const slides = document.querySelectorAll("#slider img");
+    let current = 0;
+
+    setInterval(() => {
+      slides[current].classList.remove("active");
+      current = (current + 1) % slides.length;
+      slides[current].classList.add("active");
+    }, 6000);
+
+    // Chatbot Functionality (Enhanced with Navigation and Voice)
+    const chatbot = document.getElementById('chatbot');
+    const openChat = document.getElementById('openChat');
+    const closeChat = document.getElementById('closeChat');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const sendMessage = document.getElementById('sendMessage');
+    const voiceToggle = document.getElementById('voiceToggle');
+    let currentLanguage = 'en'; // Default to English
+    let isVoiceActive = false;
+    let recognition;
+
+    // Get current time-based greeting
+    const now = new Date();
+    const hour = now.getHours();
+    let greeting = '';
+    if (hour < 12) greeting = '🌞 Good morning!';
+    else if (hour < 18) greeting = '🌆 Good afternoon!';
+    else greeting = '🌙 Good evening!';
+
+    // Initialize Speech Recognition and Synthesis
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const synth = window.speechSynthesis;
+
+    if (SpeechRecognition && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
+      recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US'; // Default to English
+      recognition.maxAlternatives = 1;
+      recognition.timeout = 5000; // 5-second timeout for no speech
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript.trim();
+        appendMessage('You', transcript, 'chat-message user');
+        chatInput.value = transcript;
+        sendMessage.click();
+        voiceToggle.classList.remove('active');
+        isVoiceActive = false;
+      };
+
+      recognition.onerror = (event) => {
+        let errorMsg = 'Sorry, an error occurred. ';
+        switch (event.error) {
+          case 'not-allowed':
+            errorMsg += 'Please allow microphone access in your browser settings! 😔';
+            break;
+          case 'no-speech':
+            errorMsg += 'I didn’t hear anything. Speak louder or try again! 😔';
+            break;
+          case 'audio-capture':
+            errorMsg += 'Microphone issue detected. Check your device! 😔';
+            break;
+          default:
+            errorMsg += 'Try again or type your question! 😔';
+        }
+        appendMessage('Akazi', errorMsg, 'chat-message bot');
+        console.error('Speech recognition error:', event.error);
+        voiceToggle.classList.remove('active');
+        isVoiceActive = false;
+      };
+
+      recognition.onend = () => {
+        if (isVoiceActive) {
+          appendMessage('Akazi', 'Listening stopped. Click 🎙️ to try again! 😊', 'chat-message bot');
+          voiceToggle.classList.remove('active');
+          isVoiceActive = false;
+        }
+      };
+
+      recognition.onspeechstart = () => {
+        appendMessage('Akazi', 'Listening… 🎙️', 'chat-message bot');
+      };
+
+      recognition.onspeechend = () => {
+        appendMessage('Akazi', 'Processing your voice… 🎙️', 'chat-message bot');
+      };
+    } else {
+      voiceToggle.style.display = 'none';
+      appendMessage('Akazi', 'Voice feature requires a secure connection (HTTPS) or localhost. Please type your questions! 😔 Note: Test on a local server (e.g., with live-server) for voice to work.', 'chat-message bot');
+      console.warn('Voice feature disabled: Requires HTTPS or localhost.');
+    }
+
+    // Function to speak a message with voice loading fix
+    function speakMessage(message) {
+      return new Promise((resolve) => {
+        const checkVoices = () => {
+          const voices = synth.getVoices();
+          if (voices.length === 0) {
+            synth.onvoiceschanged = checkVoices;
+          } else {
+            const utterance = new SpeechSynthesisUtterance(message);
+            utterance.lang = currentLanguage === 'en' ? 'en-US' : 'en-US'; // Fallback to English
+            utterance.rate = 1;
+            utterance.pitch = 1;
+            utterance.voice = voices.find(voice => voice.lang === (currentLanguage === 'en' ? 'en-US' : 'rw')) || voices[0];
+            utterance.onend = resolve;
+            synth.speak(utterance);
+          }
+        };
+        checkVoices();
+      });
+    }
+
+    // Function to append messages to chat
+    function appendMessage(sender, message, className) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = className;
+      msgDiv.innerHTML = `<span>${sender}: ${message}</span>`;
+      chatMessages.appendChild(msgDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Navigation links mapping
+    const navLinks = {
+      'find work': 'browse.html',
+      'find workers': 'find workers.html',
+      'about': 'abt us.html',
+      'post a job': 'post.html',
+      'companies': 'companies.html',
+      'community': 'community.html',
+      'blog': 'blog.html',
+      'message': 'message.html',
+      'browse jobs': 'browse.html',
+      'my account': 'account.html',
+      'faq': 'faq.html'
+    };
+
+    // Enhanced chatbot Q&A with navigation
+    async function getWebsiteResponse(userMessage) {
+      const msg = userMessage.toLowerCase().trim();
+
+      // Navigation commands
+      for (const [key, url] of Object.entries(navLinks)) {
+        if (msg.includes(`go to ${key}`) || msg.includes(`take me to ${key}`) || msg.includes(`open ${key}`) || msg.includes(`navigate to ${key}`)) {
+          const response = `Navigating to the ${key} page...`;
+          await speakMessage(response);
+          setTimeout(() => {
+            window.location.href = url;
+          }, 1000); // Delay to allow response to be spoken
+          return response;
+        }
+      }
+
+      // Existing responses with navigation suggestions
+      if (msg === "hi" || msg === "hello" || msg === "muraho") {
+        const response = "Hello! How can I help you? Try saying 'Go to Find Work' or ask about jobs!";
+        await speakMessage(response);
+        return response;
+      }
+
+      if (msg.includes("hi") && msg.includes("how are you")) {
+        const response = "I'm good, thank you! How can I assist you? You can say 'Navigate to About' to learn more about us.";
+        await speakMessage(response);
+        return response;
+      }
+
+      if (msg.includes("i want a job")) {
+        const response = "Okay. What kind of job are you looking for? You can also say 'Go to Find Work' to browse jobs.";
+        await speakMessage(response);
+        return response;
+      }
+
+      if (msg.includes("i need work")) {
+        const response = "Sure. Tell me your skills and location, or say 'Open Find Work' to see available jobs.";
+        await speakMessage(response);
+        return response;
+      }
+
+      if (msg.includes("do you have jobs")) {
+        const response = "Yes! Say 'Go to Find Work' to see all available jobs.";
+        await speakMessage(response);
+        return response;
+      }
+
+      if (msg.includes("i don’t have a cv") || msg.includes("i dont have a cv")) {
+        const response = "No problem. I can help you make one. Try visiting 'My Account' by saying 'Navigate to My Account'.";
+        await speakMessage(response);
+        return response;
+      }
+
+      if (msg === "help me" || msg.includes("mufashe")) {
+        const response = "I’m here to help! What do you need? You can say 'Go to FAQ' for common questions.";
+        await speakMessage(response);
+        return response;
+      }
+
+      if (msg.includes("i want remote work")) {
+        const response = "Use the 'Remote' filter in the job search. Say 'Go to Find Work' to start browsing.";
+        await speakMessage(response);
+        return response;
+      }
+
+      if (msg.includes("thanks") || msg.includes("thank you") || msg.includes("murakoze")) {
+        const response = "You’re welcome! Need more help? Try 'Open Community' to connect with others.";
+        await speakMessage(response);
+        return response;
+      }
+
+      if (msg === "bye" || msg === "goodbye") {
+        const response = "Goodbye! Come back anytime. 😊 Try 'Go to Blog' for the latest updates.";
+        await speakMessage(response);
+        return response;
+      }
+
+      // Fallback
+      const response = "Hmm, I’m not sure about that. Try asking about jobs or say 'Navigate to [page]' (e.g., 'Navigate to About') to visit a page! 😊";
+      await speakMessage(response);
+      return response;
+    }
+
+    // Toggle Voice Input
+    voiceToggle.addEventListener('click', () => {
+      if (!recognition) return;
+
+      isVoiceActive = !isVoiceActive;
+      if (isVoiceActive) {
+        voiceToggle.classList.add('active');
+        appendMessage('Akazi', 'Waiting for permission… 🎙️ Please allow microphone access!', 'chat-message bot');
+        recognition.start();
+      } else {
+        voiceToggle.classList.remove('active');
+        recognition.stop();
+        appendMessage('Akazi', 'Voice input stopped. Click 🎙️ to try again! 😊', 'chat-message bot');
+      }
+    });
+
+    openChat.addEventListener('click', () => {
+      chatbot.style.display = 'block';
+      openChat.style.display = 'none';
+      if (!chatMessages.innerHTML) {
+        const welcomeMsg = document.createElement('div');
+        welcomeMsg.className = 'chat-message bot';
+        welcomeMsg.innerHTML = `<span>${greeting} 👋 I’m Akazi, here to help you with Akazi.rw. Ask me anything or say 'Navigate to [page]' (e.g., 'Navigate to Find Work')! 😄 Click the 🎙️ to use voice!</span>`;
+        chatMessages.appendChild(welcomeMsg);
+        speakMessage("Hello, I’m Akazi. Ask me anything or say 'Navigate to a page' like 'Navigate to Find Work'. Click the mic to use voice!").catch(err => console.error('Speech synthesis failed:', err));
+      }
+    });
+
+    closeChat.addEventListener('click', () => {
+      chatbot.style.display = 'none';
+      openChat.style.display = 'flex';
+      if (isVoiceActive) {
+        voiceToggle.click(); // Stop voice if active
+      }
+    });
+
+    sendMessage.addEventListener('click', async () => {
+      const userMessage = chatInput.value.trim();
+      if (userMessage) {
+        appendMessage('You', userMessage, 'chat-message user');
+
+        const botResponse = await getWebsiteResponse(userMessage);
+        appendMessage('Akazi', botResponse, 'chat-message bot');
+
+        chatInput.value = '';
+      }
+    });
+
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendMessage.click();
+      }
+    });
+
+    // Back to Top Functionality
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 200) {
+        backToTop.style.display = 'flex';
+      } else {
+        backToTop.style.display = 'none';
+      }
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
